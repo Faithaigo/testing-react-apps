@@ -8,18 +8,19 @@ import Login from '../../components/login';
 import faker from 'faker';
 
 
-const buildLoginForm = () =>{
+const buildLoginForm = (overides) =>{
   return {
-    username:faker.internet.userName(),
-    password:faker.internet.password()
+    username:faker.internet.password(),
+    password:faker.internet.userName(),
+    ...overides
   }
 }
 
 test('submitting the form calls onSubmit with username and password', () => {
   //let submittedData;
   //const handleSubmit = data =>(submittedData=data)
-  
-  const {username,password} = buildLoginForm()
+
+  const {username,password} = buildLoginForm({password:'password1'})
   const handleSubmit = jest.fn()
   render(<Login onSubmit={handleSubmit}/>)
   userEvent.type(screen.getByLabelText(/Username/i),username)
